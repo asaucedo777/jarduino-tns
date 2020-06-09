@@ -1,28 +1,16 @@
-<Page.actionBar>
-  <ActionBar [title]="this.test">
-    <!-- 
-      Use the NavigationButton as a side-drawer button in Android
-      because ActionItems are shown on the right side of the ActionBar
-      -->
-    <NavigationButton ios:visibility="collapsed" icon="res://menu"
-                      (tap)="onDrawerButtonTap()">
-    </NavigationButton>
-    <!-- 
-      Use the ActionItem for IOS with position set to left. Using the
-      NavigationButton as a side-drawer button in iOS is not possible,
-      because its function is to always navigate back in the application.
-      -->
-    <ActionItem android:visibility="collapsed" icon="res://menu"
-                (tap)="onDrawerButtonTap()" ios.position="left">
-    </ActionItem>
-    <StackLayout orientation="horizontal" horizontalAlignment="center"
-                 verticalAlignment="center">
-      <Label [text]="this.test" verticalAlignment="center"></Label>
-      <Switch checked="{{this.scheduled}}" (tap)="onSwitchScheduled()"></Switch>
-      <!-- <Button [text]="switchTitle" (tap)="onSwitchScheduled()"></Button> -->
-    </StackLayout>
-  </ActionBar>
-</Page.actionBar>
+<ActionBar [title]="this.test">
+  <NavigationButton ios:visibility="collapsed" icon="res://menu"
+                    (tap)="onDrawerButtonTap()">
+  </NavigationButton>
+  <ActionItem android:visibility="collapsed" icon="res://menu"
+              (tap)="onDrawerButtonTap()" ios.position="left">
+  </ActionItem>
+  <StackLayout orientation="horizontal" horizontalAlignment="center"
+               verticalAlignment="center">
+    <Label [text]="this.test" verticalAlignment="center"></Label>
+    <Switch checked="{{this.scheduled}}" (tap)="onSwitchScheduled()"></Switch>
+  </StackLayout>
+</ActionBar>
 
 <ScrollView orientation="vertical">
   <StackLayout orientation="vertical" backgroundColor="lightgray">

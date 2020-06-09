@@ -107,7 +107,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   getMinute(mseconds: number): number {
     let minutes = mseconds - (ONE_HOUR * this.getHour(mseconds));
-    console.log(minutes + 1);
     let retorno = (minutes / ONE_MINUTE);
     return retorno;
   }
