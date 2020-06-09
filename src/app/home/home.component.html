@@ -1,21 +1,53 @@
-<ActionBar>
+<Page.actionBar>
+  <ActionBar [title]="this.test">
     <!-- 
-    Use the NavigationButton as a side-drawer button in Android
-    because ActionItems are shown on the right side of the ActionBar
-    -->
-    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+      Use the NavigationButton as a side-drawer button in Android
+      because ActionItems are shown on the right side of the ActionBar
+      -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu"
+                      (tap)="onDrawerButtonTap()">
+    </NavigationButton>
     <!-- 
-    Use the ActionItem for IOS with position set to left. Using the
-    NavigationButton as a side-drawer button in iOS is not possible,
-    because its function is to always navigate back in the application.
-    -->
-    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
+      Use the ActionItem for IOS with position set to left. Using the
+      NavigationButton as a side-drawer button in iOS is not possible,
+      because its function is to always navigate back in the application.
+      -->
+    <ActionItem android:visibility="collapsed" icon="res://menu"
+                (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
-    <Label text="Home"></Label>
-</ActionBar>
+    <StackLayout orientation="horizontal" horizontalAlignment="center"
+                 verticalAlignment="center">
+      <Label [text]="this.test" verticalAlignment="center"></Label>
+      <Switch checked="{{this.scheduled}}" (tap)="onSwitchScheduled()"></Switch>
+      <!-- <Button [text]="switchTitle" (tap)="onSwitchScheduled()"></Button> -->
+    </StackLayout>
+  </ActionBar>
+</Page.actionBar>
 
-<GridLayout class="page__content">
-    <Label class="page__content-icon fas" text="&#xf015;"></Label>
-    <Label class="page__content-placeholder" text="<!-- Page content goes here -->"></Label>
-</GridLayout>
+<ScrollView orientation="vertical">
+  <StackLayout orientation="vertical" backgroundColor="lightgray">
+    <WrapLayout orientation="horizontal" backgroundColor="white"
+                *ngFor="let item of pines" margin="10" padding="5">
+      <Label [text]="'PIN: D' + item.pin + ' ' + item.description "></Label>
+      <Label *ngIf="this.scheduled"
+             [text]="'Programado a las ' + (item.start0 | date:'HH:mm:ss':'+0000') "></Label>
+      <Button *ngIf="!this.scheduled" [text]="'ON / OFF'"
+              (tap)="onSwitchPin(item.pin)">
+      </Button>
+      <TimePicker *ngIf="this.scheduled" [hour]="getHour(item.start0)"
+                  [minute]="getMinute(item.start0)">
+      </TimePicker>
+      <Slider width="300" backgroundColor="blue" color="red"
+              *ngIf="this.scheduled" [value]="item.duration0" minValue="0"
+              maxValue="300"></Slider>
+      <TimePicker *ngIf="this.scheduled" [hour]="getHour(item.start1)"
+                  [minute]="getMinute(item.start1)">
+      </TimePicker>
+      <Slider width="300" backgroundColor="blue" color="red"
+              *ngIf="this.scheduled" [value]="item.duration1" minValue="0"
+              maxValue="300"></Slider>
+      <Button *ngIf="this.scheduled" [text]="'Reprogramar'"
+              (tap)="onUpdatePin(item.pin)"></Button>
+    </WrapLayout>
+  </StackLayout>
+</ScrollView>
