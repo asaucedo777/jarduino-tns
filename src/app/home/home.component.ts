@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
+
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
+import { TextField } from "tns-core-modules/ui/text-field";
+import { Slider } from "tns-core-modules/ui/slider";
+
 import * as app from "tns-core-modules/application";
 import { Pin } from "../pin.model";
 import { Esp8266Service } from "./esp8266.service";
@@ -19,8 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   scheduled: boolean;
   now: number;
   esp8266Time: number;
-  esp8266Hour: number;
-  esp8266Minute: number;
   pines: Array<Pin>;
 
   constructor(
@@ -38,8 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Quitamos ms y truncamos la fecha
     this.now = (Math.trunc((new Date()).getTime() / 1000) * 1000) % ONE_DAY;
     this.esp8266Time = 0;
-    this.esp8266Hour = this.getHour(this.esp8266Time);
-    this.esp8266Minute = this.getMinute(this.esp8266Time);
     this.onGetTime();
     this.pines = new Array<Pin>();
     this.getPines();
@@ -76,6 +76,37 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
     this.onGetTime();
   }
+  onGetTime() {
+    this.esp8266Service.getTime()
+      .subscribe(
+        response => {
+          this.esp8266Time = response.time * 1000;
+        },
+        error => alert(error)
+      );
+  }
+  onStart0Change(pin: number, event) {
+    this.pines[pin].start0 = event.valor;
+  }
+  onDuration0Blur(pin: number, event) {
+    let value = (<TextField>event.object).text;
+    this.pines[pin].duration0 = parseInt(value);
+  }
+  onDuration0Change(pin: number, event) {
+    let value = (<Slider>event.object).value;
+    this.pines[pin].duration0 = value;
+  }
+  onStart1Change(pin: number, event) {
+    this.pines[pin].start0 = event.valor;
+  }
+  onDuration1Blur(pin: number, event) {
+    let value = (<TextField>event.object).text;
+    this.pines[pin].duration1 = parseInt(value);
+  }
+  onDuration1Change(pin: number, event) {
+    let value = (<Slider>event.object).value;
+    this.pines[pin].duration1 = value;
+  }
   onUpdatePin(pin: number) {
     this.esp8266Service.digitalPinPost(this.bind(this.pines[pin]))
       .subscribe(
@@ -89,25 +120,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
     this.onGetTime();
   }
-  onGetTime() {
-    this.esp8266Service.getTime()
-      .subscribe(
-        response => {
-          this.esp8266Time = response.time * 1000;
-        },
-        error => alert(error)
-      );
-  }
 
   getHour(mseconds: number): number {
-    let retorno = Math.trunc(
-      (Math.trunc(mseconds / 1000) * 1000) % ONE_DAY
-    ) / ONE_HOUR;
+    let retorno = new Date(mseconds).getHours();
     return retorno;
   }
   getMinute(mseconds: number): number {
-    let minutes = mseconds - (ONE_HOUR * this.getHour(mseconds));
-    let retorno = (minutes / ONE_MINUTE);
+    let retorno = new Date(mseconds).getMinutes();
     return retorno;
   }
   private getTest() {
@@ -115,7 +134,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.test = response.test;
-          console.log(this.test);
         },
         error => {
           this.test = error;
@@ -151,7 +169,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   private bind(pin: Pin): string {
     let retorno = `pin=${pin.pin}&start0=${pin.start0 / 1000}&start1=${pin.start1 / 1000}&duration0=${pin.duration0}&duration1=${pin.duration1}`;
-    // console.log(retorno);
     return retorno;
   }
 

@@ -3,6 +3,7 @@ import { NativeScriptCommonModule } from "nativescript-angular/common";
 
 import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
+import { TimePickerComponent } from "../components/timepicker.component";
 
 @NgModule({
   imports: [
@@ -10,7 +11,8 @@ import { HomeComponent } from "./home.component";
     HomeRoutingModule
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    TimePickerComponent
   ],
   schemas: [
     NO_ERRORS_SCHEMA

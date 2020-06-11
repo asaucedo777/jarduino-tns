@@ -1,7 +1,7 @@
 @import "~@nativescript/theme/core";
 @import "~@nativescript/theme/blue";
 
-WrapLayout {
+WrapLayout, Label, Button, TextField {
   border-radius: 10;
 }
 
