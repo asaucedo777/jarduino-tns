@@ -15,41 +15,51 @@
   <StackLayout orientation="vertical" backgroundColor="lightgray">
     <WrapLayout orientation="horizontal" backgroundColor="gray"
                 *ngFor="let item of pines" margin="5" padding="5">
-      <Label width="300"
-             [text]="'PIN: D' + item.pin + ' ' + item.description + ' PROG1'"></Label>
-      <Button *ngIf="!this.scheduled" [text]="'ON / OFF'"
-              (tap)="onSwitchPin(item.pin)">
-      </Button>
-      <Label *ngIf="this.scheduled" [text]="'A las ' + (item.start0 | date:'HH:mm:ss':'+0000') + ' durante ' 
-           + item.duration0 + ' segundos'"></Label>
-      <app-timepicker *ngIf="this.scheduled" [horaMs]="item.start0"
-                      (cambio)="onStart0Change(item.pin, $event)">
-      </app-timepicker>
-      <TextField height="30" *ngIf="this.scheduled" [text]="item.duration0"
-                 hint="Enter text" color="orangered"
-                 backgroundColor="lightyellow"
-                 (blur)="onDuration0Blur(item.pin, $event)"></TextField>
-      <Slider width="200" backgroundColor="blue" color="red"
-              *ngIf="this.scheduled" [value]="item.duration0" minValue="0"
-              maxValue="300"
-              (valueChange)="onDuration0Change(item.pin, $event)"></Slider>
-      <Label width="300"
-             [text]="'PIN: D' + item.pin + ' ' + item.description + ' PROG2'"></Label>
-      <Label *ngIf="this.scheduled" [text]="'A las ' + (item.start1 | date:'HH:mm:ss':'+0000') + ' durante ' 
-                 + item.duration1 + ' segundos'"></Label>
-      <app-timepicker *ngIf="this.scheduled" [horaMs]="item.start1"
-                      (cambio)="onStart1Change(item.pin, $event)">
-      </app-timepicker>
-      <TextField height="30" *ngIf="this.scheduled" [text]="item.duration1"
-                 hint="Enter text" color="orangered"
-                 backgroundColor="lightyellow"
-                 (blur)="onDuration1Blur(item.pin, $event)"></TextField>
-      <Slider width="200" backgroundColor="blue" color="red"
-              *ngIf="this.scheduled" [value]="item.duration1" minValue="0"
-              maxValue="300"
-              (valueChange)="onDuration1Change(item.pin, $event)"></Slider>
-      <Button *ngIf="this.scheduled" [text]="'Reprogramar'"
-              (tap)="onUpdatePin(item.pin)"></Button>
+      <WrapLayout orientation="horizontal" horizontalAlignment="center" itemWidth="300">
+        <Label class="titlephase" width="300"
+               [text]="item.pin + ' ' + item.description"></Label>
+        <Button *ngIf="!this.scheduled" [text]="'ON / OFF'"
+                (tap)="onSwitchPin(item.pin)">
+        </Button>
+        <Label marginLeft="10" *ngIf="this.scheduled" [text]="'PROGRAMA 1: A las ' + (item.start0 | date:'HH:mm:ss':'+0000') + ' durante ' 
+             + item.duration0 + ' segundos'"></Label>
+        <app-timepicker horizontalAlignment="left" marginLeft="10"
+                        *ngIf="this.scheduled" [horaMs]="item.start0"
+                        (cambio)="onStart0Change(item.pin, $event)">
+        </app-timepicker>
+        <StackLayout orientation="horizontal" width="300">
+          <TextField width="50" marginLeft="10" height="30"
+                     *ngIf="this.scheduled" [text]="item.duration0"
+                     hint="Enter text" textAlignment="center"
+                     backgroundColor="lightyellow" color="black"
+                     (blur)="onDuration0Blur(item.pin, $event)"></TextField>
+          <Slider width="200" backgroundColor="blue" color="red"
+                  *ngIf="this.scheduled" [value]="item.duration0" minValue="0"
+                  maxValue="300"
+                  (valueChange)="onDuration0Change(item.pin, $event)"></Slider>
+        </StackLayout>
+      </WrapLayout>
+      <WrapLayout orientation="horizontal" horizontalAlignment="center" itemWidth="300">
+        <Label marginLeft="10" *ngIf="this.scheduled" [text]="'PROGRAMA 2: A las ' + (item.start1 | date:'HH:mm:ss':'+0000') + ' durante ' 
+                   + item.duration1 + ' segundos'"></Label>
+        <app-timepicker marginLeft="10" *ngIf="this.scheduled"
+                        [horaMs]="item.start1"
+                        (cambio)="onStart1Change(item.pin, $event)">
+        </app-timepicker>
+        <StackLayout orientation="horizontal" width="300">
+          <TextField height="30" marginLeft="10" *ngIf="this.scheduled"
+                     [text]="item.duration1" hint="Enter text"
+                     backgroundColor="lightyellow" color="black"
+                     textAlignment="center"
+                     (blur)="onDuration1Blur(item.pin, $event)"></TextField>
+          <Slider width="200" backgroundColor="blue" color="red"
+                  *ngIf="this.scheduled" [value]="item.duration1" minValue="0"
+                  maxValue="300"
+                  (valueChange)="onDuration1Change(item.pin, $event)"></Slider>
+        </StackLayout>
+        <Button height="30" marginLeft="10" *ngIf="this.scheduled"
+                [text]="'Reprogramar'" (tap)="onUpdatePin(item.pin)"></Button>
+      </WrapLayout>
     </WrapLayout>
   </StackLayout>
 </ScrollView>
