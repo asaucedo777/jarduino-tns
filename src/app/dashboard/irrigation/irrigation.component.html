@@ -1,16 +1,5 @@
-<ActionBar [title]="this.test">
-  <NavigationButton ios:visibility="collapsed" icon="res://menu"
-                    (tap)="onDrawerButtonTap()">
-  </NavigationButton>
-  <ActionItem android:visibility="collapsed" icon="res://menu"
-              (tap)="onDrawerButtonTap()" ios.position="left">
-  </ActionItem>
-  <StackLayout orientation="horizontal" horizontalAlignment="center"
-               verticalAlignment="center">
-    <Label [text]="this.test" verticalAlignment="center"></Label>
-    <Switch checked="{{this.scheduled}}" (tap)="onSwitchScheduled()"></Switch>
-  </StackLayout>
-</ActionBar>
+<app-actionbar title="RIEGO">
+</app-actionbar>
 <ScrollView orientation="vertical">
   <StackLayout orientation="vertical" backgroundColor="lightgray">
     <WrapLayout orientation="horizontal" backgroundColor="gray"

@@ -1,0 +1,19 @@
+<app-actionbar title="Jarduino">
+</app-actionbar>
+<DockLayout stretchLastChild="true" backgroundColor="lightgray">
+  <StackLayout dock="top" orientation="vertical">
+    <GridLayout height="500" rows="180, 180" columns="180, 180"
+                backgroundColor="gray">
+      <Label class="dashboard-element" text="RIEGO" row="0" col="0"
+             (tap)="onNavItemTap('/dashboard/irrigation')"></Label>
+      <Label class="dashboard-element" text="LUCES" row="0" col="1"
+             (tap)="onNavItemTap('/dashboard/lights')"></Label>
+      <Label class="dashboard-element" text="PUERTAS" row="1" col="0"
+             (tap)="onNavItemTap('/dashboard/doors')"></Label>
+      <Label class="dashboard-element" text="LIBRE" row="1" col="1"
+             (tap)="onNavItemTap('/dashboard/free')"></Label>
+    </GridLayout>
+  </StackLayout>
+  <Button [text]="switchTitle" dock="bottom" class="dashboard-bottom" checked="{{this.scheduled}}"
+          (tap)="onSwitchScheduled()"></Button>
+</DockLayout>

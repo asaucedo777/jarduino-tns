@@ -35,12 +35,10 @@ export class AppComponent implements OnInit {
   }
 
   onNavItemTap(navItemRoute: string): void {
-    this.routerExtensions.navigate([navItemRoute], {
-      transition: {
-        name: "fade"
-      }
-    });
-
+    let extras = {
+      // transition: { name: "fade" },
+    };
+    this.routerExtensions.navigate([navItemRoute], extras);
     const sideDrawer = <RadSideDrawer>app.getRootView();
     sideDrawer.closeDrawer();
   }

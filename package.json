@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.esp8266tns",
+    "id": "org.asv.domogarden",
     "tns-android": {
       "version": "6.5.0"
     },
@@ -8,8 +8,8 @@
       "version": "6.5.0"
     }
   },
-  "description": "NativeScript Application",
-  "license": "SEE LICENSE IN <your-license-filename>",
+  "description": "Domo-Garden App",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": "<fill-your-repository-here>",
   "scripts": {
     "lint": "tslint \"src/**/*.ts\""

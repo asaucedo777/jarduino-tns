@@ -1,0 +1,12 @@
+<ActionBar [title]="this.title">
+  <NavigationButton ios:visibility="collapsed" icon="res://menu"
+                    (tap)="onDrawerButtonTap()">
+  </NavigationButton>
+  <ActionItem android:visibility="collapsed" icon="res://menu"
+              (tap)="onDrawerButtonTap()" ios.position="left">
+  </ActionItem>
+  <StackLayout orientation="horizontal" horizontalAlignment="center"
+               verticalAlignment="center">
+    <Label [text]="this.title" verticalAlignment="center"></Label>
+  </StackLayout>
+</ActionBar>

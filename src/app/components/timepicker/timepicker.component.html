@@ -1,0 +1,11 @@
+<GridLayout rows="*, *, *" columns="*, *, *" width="270" height="150" horizontalAlignment="center" verticalAlignment="middle" >
+  <Button class="timepicker-button-green" text="+" row="0" col="0" (tap)="onPlus('H')" ></Button>
+  <Button class="timepicker-button-green" text="+" row="0" col="1" (tap)="onPlus('m')" ></Button>
+  <Button class="timepicker-button-green" text="+" row="0" col="2" (tap)="onPlus('s')" ></Button>
+  <Button class="timepicker-button-white" [text]="this.hours"   row="1" col="0"        ></Button>
+  <Button class="timepicker-button-white" [text]="this.minutes" row="1" col="1"        ></Button>
+  <Button class="timepicker-button-white" [text]="this.seconds" row="1" col="2"        ></Button>
+  <Button class="timepicker-button-orange" text="-" row="2" col="0" (tap)="onMinus('H')"></Button>
+  <Button class="timepicker-button-orange" text="-" row="2" col="1" (tap)="onMinus('m')"></Button>
+  <Button class="timepicker-button-orange" text="-" row="2" col="2" (tap)="onMinus('s')"></Button>
+</GridLayout>

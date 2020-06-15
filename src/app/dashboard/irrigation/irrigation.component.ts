@@ -5,16 +5,16 @@ import { TextField } from "tns-core-modules/ui/text-field";
 import { Slider } from "tns-core-modules/ui/slider";
 
 import * as app from "tns-core-modules/application";
-import { Pin } from "../pin.model";
-import { Esp8266Service } from "../esp8266.service";
+import { Pin } from "../../pin.model";
+import { Esp8266Service } from "../../esp8266.service";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
 @Component({
-  selector: "Home",
-  templateUrl: "./home.component.html"
+  selector: "Irrigation",
+  templateUrl: "./irrigation.component.html"
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class IrrigationComponent implements OnInit, OnDestroy {
   alive: boolean;
   test: string;
   switchTitle: '...' | 'Manual' | 'Programado';
@@ -44,11 +44,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.alive = false;
-  }
-
-  onDrawerButtonTap(): void {
-    const sideDrawer = <RadSideDrawer>app.getRootView();
-    sideDrawer.showDrawer();
   }
 
   onSwitchScheduled() {

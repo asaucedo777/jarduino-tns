@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Pin } from '../pin.model';
-import { environment } from '../../environment';
+import { Pin } from './pin.model';
+import { environment } from '../environment';
 
 @Injectable()
 export class Esp8266Service {
