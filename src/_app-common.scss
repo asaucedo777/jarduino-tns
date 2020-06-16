@@ -1,7 +1,9 @@
 @import "~@nativescript/theme/core";
 @import "~@nativescript/theme/blue";
 
-WrapLayout, Button, TextField {
+WrapLayout,
+Button,
+TextField {
   border-radius: 10;
 }
 
@@ -78,6 +80,22 @@ Image {
   text-align: center;
 }
 
+.regando {
+  animation-name: regando;
+  animation-duration: 0.75s;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes regando {
+  from {
+    background-color: greenyellow;
+  }
+  to {
+    background-color: red;
+  }
+}
+
 .dashboard-bottom {
   background-color: rgb(139, 139, 219);
   text-align: center;
@@ -90,4 +108,3 @@ Image {
   border-left-width: 2;
   border-left-color: black;
 }
-

@@ -1,10 +1,8 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 
-import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { TextField } from "tns-core-modules/ui/text-field";
 import { Slider } from "tns-core-modules/ui/slider";
 
-import * as app from "tns-core-modules/application";
 import { Pin } from "../../pin.model";
 import { Esp8266Service } from "../../esp8266.service";
 
@@ -16,21 +14,22 @@ const ONE_DAY = 24 * 60 * 60 * 1000;
 })
 export class IrrigationComponent implements OnInit, OnDestroy {
   alive: boolean;
-  test: string;
+  title: string;
   switchTitle: '...' | 'Manual' | 'Programado';
   scheduled: boolean;
   now: number;
   esp8266Time: number;
   pines: Array<Pin>;
+  regando: Array<boolean>;
 
   constructor(
     public esp8266Service: Esp8266Service,
   ) {
   }
-  
+
   ngOnInit(): void {
     this.alive = true;
-    this.test = 'Conectando..';
+    this.title = 'Conectando..';
     this.getTest();
     this.switchTitle = '...';
     this.scheduled = false;
@@ -41,6 +40,7 @@ export class IrrigationComponent implements OnInit, OnDestroy {
     this.onGetTime();
     this.pines = new Array<Pin>();
     this.getPines();
+    this.regando = [ false, false];
   }
   ngOnDestroy(): void {
     this.alive = false;
@@ -52,7 +52,6 @@ export class IrrigationComponent implements OnInit, OnDestroy {
         response => {
           this.scheduled = response.scheduledMode == 1;
           this.switchTitle = this.scheduled ? 'Programado' : 'Manual';
-          // alert('Modo de dispositivo ' + this.switchTitle);
           this.getPines();
         },
         error => alert(error)
@@ -64,7 +63,13 @@ export class IrrigationComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.getPines();
-          alert('Switch pin D' + pin + ' ok');
+          if (this.pines[pin].status == 1) {
+            alert('Fase ' + (pin + 1) + ' de riego DESACTIVADA.');
+            this.regando[pin] = false;
+          } else {
+            alert('Fase ' + (pin + 1) + ' de riego ACTIVADA.');
+            this.regando[pin] = true;
+          }
         },
         error => alert(error)
       );
@@ -91,7 +96,7 @@ export class IrrigationComponent implements OnInit, OnDestroy {
     this.pines[pin].duration0 = value;
   }
   onStart1Change(pin: number, event) {
-    this.pines[pin].start0 = event.valor;
+    this.pines[pin].start1 = event.valor;
   }
   onDuration1Blur(pin: number, event) {
     let value = (<TextField>event.object).text;
@@ -106,7 +111,9 @@ export class IrrigationComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.getPines();
-          alert('Actualización de pin D' + pin + 'Pin actualizado');
+          alert('Pin D' + pin + ' programado a las ' + this.pines[pin].start0 + ' durante '
+            + this.pines[pin].duration0 + ' segundos y programado a las ' + this.pines[pin].start1 + ' durante '
+            + this.pines[pin].duration1 + ' segundos.');
         },
         error => {
           alert(error);
@@ -127,10 +134,10 @@ export class IrrigationComponent implements OnInit, OnDestroy {
     this.esp8266Service.test()
       .subscribe(
         response => {
-          this.test = response.test;
+          this.title = 'RIEGO';
         },
         error => {
-          this.test = error;
+          this.title = error;
           alert(error);
         }
       );
@@ -148,16 +155,19 @@ export class IrrigationComponent implements OnInit, OnDestroy {
   private getPines() {
     this.esp8266Service.digitalPins()
       .subscribe(
-        response => this.setearPines(response.pines),
+        response => this.setearPinesRiego(response.pines),
         error => {
           alert(error);
         });
   }
-  private setearPines(pines: Array<Pin>) {
+  private setearPinesRiego(pines: Array<Pin>) {
     this.pines = [];
     if (pines) {
       pines.forEach((element: any) => {
-        this.pines.push(new Pin(element))
+        // TODO Crear atributo pinType
+        if (element.description.includes('Riego')) {
+          this.pines.push(new Pin(element))
+        }
       });
     }
   }
