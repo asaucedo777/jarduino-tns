@@ -12,7 +12,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": "<fill-your-repository-here>",
   "scripts": {
-    "lint": "tslint \"src/**/*.ts\""
+    "lint": "tslint \"src/**/*.ts\"",
+    "android-install": "tns deploy android"
   },
   "dependencies": {
     "@angular/animations": "~8.2.0",

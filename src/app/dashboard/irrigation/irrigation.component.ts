@@ -5,6 +5,7 @@ import { Slider } from "tns-core-modules/ui/slider";
 
 import { Pin } from "../../pin.model";
 import { Esp8266Service } from "../../esp8266.service";
+import { getHour, getMinute } from "~/app/app.utils";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -111,8 +112,12 @@ export class IrrigationComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           this.getPines();
-          alert('Pin D' + pin + ' programado a las ' + this.pines[pin].start0 + ' durante '
-            + this.pines[pin].duration0 + ' segundos y programado a las ' + this.pines[pin].start1 + ' durante '
+          alert('Pin D' + pin + ' programado a las ' 
+            + getHour(this.pines[pin].start0) + ':'  
+            + getMinute(this.pines[pin].start0) + ' durante '  
+            + this.pines[pin].duration0 + ' segundos y programado a las ' 
+            + getHour(this.pines[pin].start1) + ':'  
+            + getMinute(this.pines[pin].start1) + ' durante '  
             + this.pines[pin].duration1 + ' segundos.');
         },
         error => {
@@ -122,14 +127,6 @@ export class IrrigationComponent implements OnInit, OnDestroy {
     this.onGetTime();
   }
 
-  getHour(mseconds: number): number {
-    let retorno = new Date(mseconds).getHours();
-    return retorno;
-  }
-  getMinute(mseconds: number): number {
-    let retorno = new Date(mseconds).getMinutes();
-    return retorno;
-  }
   private getTest() {
     this.esp8266Service.test()
       .subscribe(

@@ -27,7 +27,7 @@ export class TimePickerComponent implements OnInit {
     } else if (this.horaDate) {
       this.horaMs = this.horaDate.getTime();
     }
-    this.hours = this.horaDate ? this.horaDate.getHours() - 1 : 0;
+    this.hours = this.horaDate ? (this.horaDate.getHours() == 0 ? 23 : this.horaDate.getHours() - 1) : 0;
     this.minutes = this.horaDate ? this.horaDate.getMinutes() : 0;
     this.seconds = this.horaDate ? this.horaDate.getSeconds() : 0;
   }
