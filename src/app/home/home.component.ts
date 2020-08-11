@@ -6,7 +6,7 @@ import { Slider } from "tns-core-modules/ui/slider";
 
 import * as app from "tns-core-modules/application";
 import { Pin } from "../pin.model";
-import { Esp8266Service } from "../esp8266.service";
+import { Esp8266Service } from "../app.service";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 

@@ -10,8 +10,8 @@
   },
   "description": "Domo-Garden App",
   "license": "SEE LICENSE IN LICENSE",
-  "repository": "<fill-your-repository-here>",
   "scripts": {
+    "prev": "tns preview",
     "lint": "tslint \"src/**/*.ts\"",
     "android-install": "tns deploy android"
   },

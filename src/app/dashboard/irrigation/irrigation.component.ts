@@ -4,7 +4,7 @@ import { TextField } from "tns-core-modules/ui/text-field";
 import { Slider } from "tns-core-modules/ui/slider";
 
 import { Pin } from "../../pin.model";
-import { Esp8266Service } from "../../esp8266.service";
+import { Esp8266Service } from "../../app.service";
 import { getHour, getMinute } from "~/app/app.utils";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
@@ -30,7 +30,7 @@ export class IrrigationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.alive = true;
-    this.title = 'Conectando..';
+    this.title = 'Conectando al riego...';
     this.getTest();
     this.switchTitle = '...';
     this.scheduled = false;
@@ -131,10 +131,10 @@ export class IrrigationComponent implements OnInit, OnDestroy {
     this.esp8266Service.test()
       .subscribe(
         response => {
-          this.title = 'RIEGO';
+          this.title = 'CONECTADO AL RIEGO';
         },
         error => {
-          this.title = error;
+          this.title = JSON.stringify(error);
           alert(error);
         }
       );

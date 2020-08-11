@@ -1,12 +1,18 @@
-<app-actionbar title="Jarduino: {{ this.hora  | date:'HH:mm:ss':'+0000'}}">
+<app-actionbar *ngIf="isConnecting && !isError" [title]="'Jarduino(' + attempts + '): conectando.. '">
+</app-actionbar>
+<app-actionbar *ngIf="attempts > 0" [title]="'Jarduino: reintentando(' + attempts + ')..' ">
+</app-actionbar>
+<app-actionbar *ngIf="!isConnecting && !isError" title="Jarduino: {{ this.hora  | date:'HH:mm:ss':'+0000'}}">
+</app-actionbar>
+<app-actionbar *ngIf="!isConnecting && isError" [title]="'Jarduino(' + attempts + '): no se pudo conectar '">
 </app-actionbar>
 <DockLayout stretchLastChild="true" backgroundColor="lightgray">
-  <StackLayout dock="top" orientation="vertical">
+  <StackLayout *ngIf="!isConnecting"  dock="top" orientation="vertical">
     <GridLayout height="500" rows="180, 180" columns="180, 180"
                 backgroundColor="gray">
       <Label textWrap="true" 
        [class]="this.regando ? 'dashboard-element regando' : 'dashboard-element'" 
-       [text]="this.irrigationText" row="0" col="0"
+       [text]="'(' + attempts + ')' + this.irrigationText" row="0" col="0"
              (tap)="onNavItemTap('/dashboard/irrigation')"></Label>
       <Label class="dashboard-element" text="LUCES" row="0" col="1"
              (tap)="onNavItemTap('/dashboard/lights')"></Label>
@@ -16,6 +22,6 @@
              (tap)="onNavItemTap('/dashboard/free')"></Label>
     </GridLayout>
   </StackLayout>
-  <Button [text]="switchTitle" dock="bottom" class="dashboard-bottom" checked="{{this.scheduled}}"
+  <Button *ngIf="!isConnecting" [text]="switchTitle" dock="bottom" class="dashboard-bottom" checked="{{this.scheduled}}"
           (tap)="onSwitchScheduled()"></Button>
 </DockLayout>

@@ -4,9 +4,9 @@ import { HttpClientModule } from "@angular/common/http";
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 
-import { AppRoutingModule } from "./app-routing.module";
+import { AppRoutingModule } from "./app.routing.module";
 import { AppComponent } from "./app.component";
-import { Esp8266Service } from "./esp8266.service";
+import { Esp8266Service } from "./app.service";
 
 @NgModule({
   declarations: [

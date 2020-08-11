@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 
 import * as app from "tns-core-modules/application";
-import { Esp8266Service } from "../../esp8266.service";
+import { Esp8266Service } from "../../app.service";
 
 const ONE_DAY = 24 * 60 * 60 * 1000;
 
